@@ -1045,7 +1045,7 @@ function CriarPageInner() {
                     >
                       <p className="text-gray-400 text-[10px] font-bold uppercase tracking-wider mb-2">7 Dias</p>
                       <div className="flex items-end gap-0.5 mb-1">
-                        <span className="text-white font-black text-2xl">R$ 19</span>
+                        <span className="text-white font-black text-2xl">R$ 15</span>
                         <span className="text-white font-black text-sm mb-0.5">,90</span>
                       </div>
                       <p className="text-gray-500 text-xs line-through mb-2">R$ 39,90</p>
@@ -1066,7 +1066,7 @@ function CriarPageInner() {
                       </div>
                       <p className="text-[#E8185A] text-[10px] font-bold uppercase tracking-wider mb-2">Vitalício</p>
                       <div className="flex items-end gap-0.5 mb-1">
-                        <span className="text-[#E8185A] font-black text-2xl">R$ 29</span>
+                        <span className="text-[#E8185A] font-black text-2xl">R$ 23</span>
                         <span className="text-[#E8185A] font-black text-sm mb-0.5">,90</span>
                       </div>
                       <p className="text-gray-500 text-xs line-through mb-2">R$ 69,90</p>

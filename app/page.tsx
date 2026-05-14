@@ -339,9 +339,9 @@ export default async function Home() {
           </div>
           <p className="text-gray-600 text-sm mb-5">O presente digital que faz chorar de emoção.</p>
           <div className="flex justify-center gap-6 text-xs text-gray-600 flex-wrap">
-            {["Termos de Uso", "Privacidade", "Contato"].map((l) => (
-              <a key={l} href="#" className="hover:text-white transition-colors">{l}</a>
-            ))}
+            <a href="/termos" className="hover:text-white transition-colors">Termos de Uso</a>
+            <a href="/privacidade" className="hover:text-white transition-colors">Privacidade</a>
+            <a href="/contato" className="hover:text-white transition-colors">Contato</a>
           </div>
           <p className="text-gray-700 text-xs mt-5">© 2025 BMM Love. Todos os direitos reservados.</p>
         </div>
