@@ -10,7 +10,7 @@ export async function GET(
   const token = req.cookies.get("bmm_session")?.value;
   if (!token) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
-  const session = getSession(token);
+  const session = await getSession(token);
   if (!session) return NextResponse.json({ error: "Sessão expirada." }, { status: 401 });
 
   const { pageId } = await params;
@@ -36,7 +36,7 @@ export async function GET(
     createdAt: page.createdAt,
     expiresAt: page.expiresAt,
     canEdit: page.plan === "vitalicio",
-    editFree: page.plan === "vitalicio" && hoursOld < 24,
+    editFree: page.plan === "vitalicio" && hoursOld < 24 && !page.freeEditUsed,
     editUnlocked: !!editUnlocked,
   });
 }

@@ -11,7 +11,7 @@ export async function POST(
   const token = req.cookies.get("bmm_session")?.value;
   if (!token) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
-  const session = getSession(token);
+  const session = await getSession(token);
   if (!session) return NextResponse.json({ error: "Sessão expirada." }, { status: 401 });
 
   const { pageId } = await params;
@@ -28,7 +28,7 @@ export async function POST(
   }
 
   const hoursOld = (Date.now() - page.createdAt) / (1000 * 60 * 60);
-  if (hoursOld < 24) {
+  if (hoursOld < 24 && !page.freeEditUsed) {
     return NextResponse.json({ error: "Dentro das 24h, edição é gratuita." }, { status: 400 });
   }
 
