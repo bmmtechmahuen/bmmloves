@@ -3,6 +3,7 @@ import Navbar from "./components/Navbar";
 import Typewriter from "./components/Typewriter";
 import FaqAccordion from "./components/FaqAccordion";
 import { getCount } from "./lib/counter";
+import Image from "next/image";
 
 const steps = [
   { n: "01", title: "Crie o roteiro", desc: "Preencha a história de vocês: data de início, momentos marcantes, frases especiais." },
@@ -334,8 +335,7 @@ export default async function Home() {
       <footer className="bg-[#0a0a0a] border-t border-white/5 py-10">
         <div className="max-w-7xl mx-auto px-5 sm:px-6 text-center">
           <div className="flex items-center justify-center gap-2.5 mb-4">
-            <div className="w-7 h-7 bg-[#E8185A] rounded-md flex items-center justify-center font-black text-white text-xs">BL</div>
-            <span className="font-bold">BMM Love</span>
+            <Image src="/logo.png" alt="BMM Love" width={28} height={28} className="rounded-md" />
           </div>
           <p className="text-gray-600 text-sm mb-5">O presente digital que faz chorar de emoção.</p>
           <div className="flex justify-center gap-6 text-xs text-gray-600 flex-wrap">

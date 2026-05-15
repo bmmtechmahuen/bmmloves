@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import Image from "next/image";
 
 function ProfileFace({ color, faceColor, size = 120 }: { color: string; faceColor: string; size?: number }) {
   return (
@@ -46,8 +47,7 @@ export default function ProfileSelector({ nome, tituloFilme, onSelect }: Props) 
     >
       {/* BMM Love logo top */}
       <div className="absolute top-6 left-1/2 -translate-x-1/2 flex items-center gap-2">
-        <div className="w-7 h-7 bg-[#E8185A] rounded-md flex items-center justify-center font-black text-white text-xs">BL</div>
-        <span className="font-bold text-lg tracking-tight"><span className="text-[#E8185A]">BMM</span> Love</span>
+        <Image src="/logo.png" alt="BMM Love" width={28} height={28} className="rounded-md" />
       </div>
 
       <h1

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 
 export const metadata = { title: "Termos de Uso — BMM Love" };
 
@@ -14,8 +15,7 @@ export default function TermosPage() {
         </Link>
 
         <div className="flex items-center gap-2.5 mb-10">
-          <div className="w-8 h-8 bg-[#E8185A] rounded-md flex items-center justify-center font-black text-white text-xs">BL</div>
-          <span className="font-bold text-lg"><span className="text-[#E8185A]">BMM</span> Love</span>
+          <Image src="/logo.png" alt="BMM Love" width={32} height={32} className="rounded-md" />
         </div>
 
         <h1 className="text-3xl font-black mb-2">Termos de Uso</h1>

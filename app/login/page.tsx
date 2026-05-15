@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 
 type Step = "email" | "code";
 
@@ -71,8 +72,7 @@ export default function EntrarPage() {
         {/* Logo */}
         <div className="text-center mb-10">
           <div className="flex items-center justify-center gap-2.5">
-            <div className="w-9 h-9 bg-[#E8185A] rounded-md flex items-center justify-center font-black text-white text-sm">BL</div>
-            <span className="font-bold text-2xl tracking-tight"><span className="text-[#E8185A]">BMM</span> Love</span>
+            <Image src="/logo.png" alt="BMM Love" width={36} height={36} className="rounded-md" />
           </div>
           <p className="text-white/30 text-sm mt-2">Acesse sua conta</p>
         </div>

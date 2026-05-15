@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import Image from "next/image";
 
 const links = [
   { href: "#inicio", label: "Início" },
@@ -16,8 +17,7 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 flex items-center justify-between h-16">
         {/* Logo */}
         <a href="/" className="flex items-center gap-2.5">
-          <div className="w-8 h-8 bg-[#E8185A] rounded-md flex items-center justify-center font-black text-white text-sm">BL</div>
-          <span className="font-bold text-lg tracking-tight"><span className="text-[#E8185A]">BMM</span> Love</span>
+          <Image src="/logo.png" alt="BMM Love" width={32} height={32} className="rounded-md" />
         </a>
 
         {/* Desktop links */}

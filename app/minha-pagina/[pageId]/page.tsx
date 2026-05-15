@@ -2,6 +2,7 @@
 import { useEffect, useState, Suspense } from "react";
 import { useParams, useSearchParams, useRouter } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 
 type PageInfo = {
   pageId: string;
@@ -93,8 +94,7 @@ function MinhaPaginaPageInner() {
       <div className="border-b border-white/5 px-6 py-4">
         <div className="max-w-lg mx-auto flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <div className="w-7 h-7 bg-[#E8185A] rounded-md flex items-center justify-center font-black text-white text-xs">BL</div>
-            <span className="font-bold text-base tracking-tight"><span className="text-[#E8185A]">BMM</span> Love</span>
+            <Image src="/logo.png" alt="BMM Love" width={28} height={28} className="rounded-md" />
           </div>
           <button onClick={logout} className="text-xs text-white/30 hover:text-white/60 transition-colors">Sair</button>
         </div>
