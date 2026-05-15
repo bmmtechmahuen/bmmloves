@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 
 const MAX_ERROS = 6;
 const TECLADO = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
@@ -9,7 +9,7 @@ function normalizar(w: string) {
 }
 
 type Entrada = { palavra: string; dica: string };
-type Props = { entradas: Entrada[] };
+type Props = { entradas: Entrada[]; onComplete?: () => void };
 
 function HangmanSVG({ erros }: { erros: number }) {
   return (
@@ -36,9 +36,10 @@ function HangmanSVG({ erros }: { erros: number }) {
   );
 }
 
-export default function Forca({ entradas }: Props) {
+export default function Forca({ entradas, onComplete }: Props) {
   const [idx, setIdx] = useState(() => Math.floor(Math.random() * entradas.length));
   const [chutadas, setChutadas] = useState<Set<string>>(new Set());
+  const completedRef = useRef(false);
 
   const entrada = entradas[idx];
   const norm = normalizar(entrada.palavra);
@@ -47,6 +48,13 @@ export default function Forca({ entradas }: Props) {
   const erros = [...chutadas].filter(l => !norm.includes(l)).length;
   const ganhou = letrasUnicas.every(l => chutadas.has(l));
   const perdeu = erros >= MAX_ERROS;
+
+  useEffect(() => {
+    if (ganhou && !completedRef.current) {
+      completedRef.current = true;
+      onComplete?.();
+    }
+  }, [ganhou, onComplete]);
 
   const chutar = (letra: string) => {
     if (chutadas.has(letra) || ganhou || perdeu) return;

@@ -29,6 +29,7 @@ export default function AdminPage() {
   const [coupons, setCoupons] = useState<Coupon[]>([]);
   const [loading, setLoading] = useState(true);
   const [releasing, setReleasing] = useState<string | null>(null);
+  const [filterDays, setFilterDays] = useState<7 | 14 | 30>(30);
 
   // New coupon form
   const [newCode, setNewCode] = useState("");
@@ -94,25 +95,28 @@ export default function AdminPage() {
   }
 
   const PRICES = { "7dias": 15.90, vitalicio: 23.90 };
-  const totalReceita = pages.reduce((s, p) => s + (PRICES[p.plan as keyof typeof PRICES] ?? 0), 0);
+
+  const hoje = new Date(); hoje.setHours(0, 0, 0, 0);
+  const cutoff = new Date(hoje); cutoff.setDate(cutoff.getDate() - (filterDays - 1));
+  const filteredPages = pages.filter(p => p.createdAt >= cutoff.getTime());
+
+  const totalReceita = filteredPages.reduce((s, p) => s + (PRICES[p.plan as keyof typeof PRICES] ?? 0), 0);
   const totalDescontos = coupons.reduce((s, c) => {
     if (c.type === "fixed") return s + c.uses * c.discount;
     const base = c.discount / 100;
     return s + c.uses * (PRICES["7dias"] * base + PRICES["vitalicio"] * base) / 2;
   }, 0);
 
-  // Últimos 14 dias de vendas
-  const hoje = new Date(); hoje.setHours(0, 0, 0, 0);
-  const dias14 = Array.from({ length: 14 }, (_, i) => {
-    const d = new Date(hoje); d.setDate(d.getDate() - 13 + i);
+  const chartDias = Array.from({ length: filterDays }, (_, i) => {
+    const d = new Date(hoje); d.setDate(d.getDate() - (filterDays - 1) + i);
     return { label: d.toLocaleDateString("pt-BR", { day: "2-digit", month: "2-digit" }), ts: d.getTime(), count: 0 };
   });
   pages.forEach(p => {
     const d = new Date(p.createdAt); d.setHours(0, 0, 0, 0);
-    const idx = dias14.findIndex(x => x.ts === d.getTime());
-    if (idx >= 0) dias14[idx].count++;
+    const idx = chartDias.findIndex(x => x.ts === d.getTime());
+    if (idx >= 0) chartDias[idx].count++;
   });
-  const maxCount = Math.max(...dias14.map(d => d.count), 1);
+  const maxCount = Math.max(...chartDias.map(d => d.count), 1);
 
   const tabs: { key: Tab; label: string; count?: number }[] = [
     { key: "visao-geral", label: "Visão Geral" },
@@ -172,8 +176,8 @@ export default function AdminPage() {
                   {[
                     { label: "Faturamento líquido", value: `R$ ${Math.max(0, totalReceita - totalDescontos).toFixed(2).replace(".", ",")}`, sub: `bruto R$ ${totalReceita.toFixed(2).replace(".", ",")}`, color: "text-green-400" },
                     { label: "Descontos dados", value: `R$ ${totalDescontos.toFixed(2).replace(".", ",")}`, sub: `${coupons.reduce((s, c) => s + c.uses, 0)} usos de cupom`, color: "text-yellow-400" },
-                    { label: "Plano 7 dias", value: pages.filter(p => p.plan === "7dias").length.toString(), sub: `R$ ${(pages.filter(p => p.plan === "7dias").length * 15.90).toFixed(2).replace(".", ",")}`, color: "text-blue-400" },
-                    { label: "Plano Vitalício", value: pages.filter(p => p.plan === "vitalicio").length.toString(), sub: `R$ ${(pages.filter(p => p.plan === "vitalicio").length * 23.90).toFixed(2).replace(".", ",")}`, color: "text-[#E8185A]" },
+                    { label: "Plano 7 dias", value: filteredPages.filter(p => p.plan === "7dias").length.toString(), sub: `R$ ${(filteredPages.filter(p => p.plan === "7dias").length * 15.90).toFixed(2).replace(".", ",")}`, color: "text-blue-400" },
+                    { label: "Plano Vitalício", value: filteredPages.filter(p => p.plan === "vitalicio").length.toString(), sub: `R$ ${(filteredPages.filter(p => p.plan === "vitalicio").length * 23.90).toFixed(2).replace(".", ",")}`, color: "text-[#E8185A]" },
                   ].map(card => (
                     <div key={card.label} className="bg-[#111118] border border-white/8 rounded-xl p-4">
                       <p className="text-xs text-white/40 mb-2">{card.label}</p>
@@ -185,9 +189,22 @@ export default function AdminPage() {
 
                 {/* Gráfico de vendas */}
                 <div className="bg-[#111118] border border-white/8 rounded-xl p-5">
-                  <h3 className="text-sm font-bold text-white/50 uppercase tracking-widest mb-6">Vendas — últimos 14 dias</h3>
+                  <div className="flex items-center justify-between mb-6">
+                    <h3 className="text-sm font-bold text-white/50 uppercase tracking-widest">Vendas</h3>
+                    <div className="flex gap-1">
+                      {([7, 14, 30] as const).map(d => (
+                        <button
+                          key={d}
+                          onClick={() => setFilterDays(d)}
+                          className={`px-3 py-1 rounded-lg text-xs font-bold transition-colors ${filterDays === d ? "bg-[#E8185A] text-white" : "bg-white/8 text-white/40 hover:bg-white/12"}`}
+                        >
+                          {d}d
+                        </button>
+                      ))}
+                    </div>
+                  </div>
                   <div className="flex items-end gap-1.5 h-32">
-                    {dias14.map(d => (
+                    {chartDias.map(d => (
                       <div key={d.label} className="flex-1 flex flex-col items-center gap-1.5">
                         <span className="text-[10px] text-white/40 font-bold">{d.count > 0 ? d.count : ""}</span>
                         <div className="w-full rounded-t-md bg-[#E8185A]/20 relative overflow-hidden" style={{ height: "80px" }}>
@@ -250,13 +267,6 @@ export default function AdminPage() {
                     <div className="flex items-center gap-4 text-xs text-white/40 flex-shrink-0">
                       <span className="bg-white/5 px-2.5 py-1 rounded-lg capitalize">{p.plan === "vitalicio" ? "Vitalício" : "7 dias"}</span>
                       <span>{fmt(p.createdAt)}</span>
-                      <a
-                        href={`/casal/${p.pageId}`}
-                        target="_blank"
-                        className="text-[#E8185A] hover:underline font-semibold"
-                      >
-                        Ver →
-                      </a>
                     </div>
                   </div>
                 ))}

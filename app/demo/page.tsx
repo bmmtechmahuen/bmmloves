@@ -70,10 +70,17 @@ export default function DemoPage() {
   const [mensagemAberta, setMensagemAberta] = useState(false);
   const [jogoAberto, setJogoAberto] = useState(false);
   const [forcaAberta, setForcaAberta] = useState(false);
+  const [jogoCompleto, setJogoCompleto] = useState(false);
+  const [forcaCompleto, setForcaCompleto] = useState(false);
+  const [showCelebration, setShowCelebration] = useState(false);
   const [playerIdx, setPlayerIdx] = useState<number | null>(null);
   const [blobUrls, setBlobUrls] = useState<Record<string, string>>({});
   const [profileSelected, setProfileSelected] = useState(false);
   const playerOpenedAt = useRef(0);
+
+  useEffect(() => {
+    if (jogoCompleto && forcaCompleto) setShowCelebration(true);
+  }, [jogoCompleto, forcaCompleto]);
 
   useEffect(() => {
     DEMO.episodios.forEach(async (ep: {id: string; videoTipo: string}) => {
@@ -161,7 +168,9 @@ export default function DemoPage() {
             {DEMO.tituloFilme || DEMO.titulo}
           </h1>
           <div className="flex flex-wrap items-center gap-2 mb-4">
-            <span className="text-green-400 text-xs font-bold">95% apaixonado</span>
+            <span className={`text-xs font-bold ${jogoCompleto && forcaCompleto ? "text-[#E8185A]" : "text-green-400"}`}>
+              {jogoCompleto && forcaCompleto ? "100% apaixonados ❤️" : "95% apaixonado"}
+            </span>
             <span className="text-gray-400 text-xs">2022</span>
             <span className="border border-white/20 text-gray-300 text-[10px] px-1.5 py-0.5 rounded">Para sempre</span>
             <span className="border border-white/20 text-gray-300 text-[10px] px-1.5 py-0.5 rounded">❤</span>
@@ -204,7 +213,7 @@ export default function DemoPage() {
                 badge
                 titulo={ep.titulo}
                 descricao={ep.descricao}
-                meta={`Episódio ${i + 1}${ep.videoNome ? ` · ${ep.videoNome}` : ""}`}
+                meta={`Episódio ${i + 1}`}
                 playLabel="Assistir"
                 onPlay={() => { playerOpenedAt.current = Date.now(); setPlayerIdx(i); }}
               />
@@ -471,7 +480,7 @@ export default function DemoPage() {
                 ? DEMO.palavrasForca
                 : ["Como Tudo Começou", "Nossa Primeira Viagem", "Praia", "Festas", "Momentos"]
               ).map((p: string) => ({ palavra: p, dica: "Momento marcante de vocês" }))
-            } />
+            } onComplete={() => setForcaCompleto(true)} />
           </div>
         </div>
       )}
@@ -498,7 +507,32 @@ export default function DemoPage() {
             <p className="text-[#E8185A] text-[10px] font-black uppercase tracking-widest mb-1">Mini Game</p>
             <h3 className="text-white font-black text-lg mb-1">Caça-Palavras</h3>
             <p className="text-gray-500 text-xs mb-5">Arraste para encontrar as palavras escondidas.</p>
-            <WordSearch words={DEMO.palavras} />
+            <WordSearch words={DEMO.palavras} onComplete={() => setJogoCompleto(true)} />
+          </div>
+        </div>
+      )}
+
+      {/* MODAL 100% APAIXONADOS */}
+      {showCelebration && (
+        <div className="fixed inset-0 z-[70] bg-black/90 backdrop-blur-sm flex items-center justify-center px-4" onClick={() => setShowCelebration(false)}>
+          <div className="relative bg-[#141414] border border-[#E8185A]/40 rounded-3xl w-full max-w-sm p-8 text-center" onClick={e => e.stopPropagation()}>
+            <button onClick={() => setShowCelebration(false)} className="absolute top-4 right-4 text-gray-500 hover:text-white transition-colors">
+              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+            </button>
+            <div className="text-6xl mb-4 animate-bounce">❤️</div>
+            <p className="text-[#E8185A] text-[10px] font-black uppercase tracking-widest mb-2">Conquista desbloqueada</p>
+            <h2 className="text-white font-black text-2xl mb-3">100% Apaixonados!</h2>
+            <p className="text-white/50 text-sm leading-relaxed mb-6">
+              Vocês completaram todos os joguinhos juntos. Agora é oficial:{" "}
+              <span className="text-white font-bold">{DEMO.nome1} & {DEMO.nome2}</span>{" "}
+              estão completamente apaixonados! 💕
+            </p>
+            <button
+              onClick={() => setShowCelebration(false)}
+              className="w-full py-3 rounded-xl bg-[#E8185A] hover:bg-[#c91450] text-white font-black text-sm transition-colors"
+            >
+              Fechar
+            </button>
           </div>
         </div>
       )}

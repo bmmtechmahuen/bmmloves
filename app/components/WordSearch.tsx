@@ -54,10 +54,11 @@ function getLine(a: [number, number], b: [number, number]): [number, number][] |
   return Array.from({ length: n }, (_, i) => [r1 + sr * i, c1 + sc * i] as [number, number]);
 }
 
-type Props = { words: string[] };
+type Props = { words: string[]; onComplete?: () => void };
 
-export default function WordSearch({ words }: Props) {
+export default function WordSearch({ words, onComplete }: Props) {
   const [{ grid, placed }] = useState(() => buildGrid(words));
+  const completedRef = useRef(false);
   const [found, setFound] = useState<Set<string>>(new Set());
   const [foundCells, setFoundCells] = useState<Set<string>>(new Set());
   const [selecting, setSelecting] = useState(false);
@@ -113,6 +114,13 @@ export default function WordSearch({ words }: Props) {
 
   const normWords = words.map(normalize);
   const allFound = found.size === normWords.length;
+
+  useEffect(() => {
+    if (allFound && !completedRef.current) {
+      completedRef.current = true;
+      onComplete?.();
+    }
+  }, [allFound, onComplete]);
 
   return (
     <div className="select-none w-full">
