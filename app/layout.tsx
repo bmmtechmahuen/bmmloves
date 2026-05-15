@@ -7,6 +7,11 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "BMM Love — Transforme sua história em streaming",
   description: "Crie uma página romântica personalizada com fotos, música e momentos especiais. Estilo Netflix para a história de vocês.",
+  icons: {
+    icon: "/logo.png",
+    shortcut: "/logo.png",
+    apple: "/logo.png",
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
