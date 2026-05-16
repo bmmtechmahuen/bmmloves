@@ -94,7 +94,7 @@ function MinhaPaginaPageInner() {
       <div className="border-b border-white/5 px-6 py-4">
         <div className="max-w-lg mx-auto flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <Image src="/logo.png" alt="BMM Love" width={28} height={28} className="rounded-md" />
+            <Image src="/logo.png" alt="BMM Love" width={48} height={48} className="rounded-md" />
           </div>
           <button onClick={logout} className="text-xs text-white/30 hover:text-white/60 transition-colors">Sair</button>
         </div>

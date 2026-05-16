@@ -15,7 +15,7 @@ export default function PrivacidadePage() {
         </Link>
 
         <div className="flex items-center gap-2.5 mb-10">
-          <Image src="/logo.png" alt="BMM Love" width={32} height={32} className="rounded-md" />
+          <Image src="/logo.png" alt="BMM Love" width={56} height={56} className="rounded-md" />
         </div>
 
         <h1 className="text-3xl font-black mb-2">Política de Privacidade</h1>

@@ -335,7 +335,7 @@ export default async function Home() {
       <footer className="bg-[#0a0a0a] border-t border-white/5 py-10">
         <div className="max-w-7xl mx-auto px-5 sm:px-6 text-center">
           <div className="flex items-center justify-center gap-2.5 mb-4">
-            <Image src="/logo.png" alt="BMM Love" width={28} height={28} className="rounded-md" />
+            <Image src="/logo.png" alt="BMM Love" width={48} height={48} className="rounded-md" />
           </div>
           <p className="text-gray-600 text-sm mb-5">O presente digital que faz chorar de emoção.</p>
           <div className="flex justify-center gap-6 text-xs text-gray-600 flex-wrap">

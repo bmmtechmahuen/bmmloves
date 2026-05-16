@@ -186,7 +186,7 @@ export default function CasalPage() {
 
         <div className="absolute top-0 left-0 right-0 px-8 py-5 flex items-center justify-between z-10">
           <div className="flex items-center gap-2">
-            <img src="/logo.png" alt="BMM Love" width={28} height={28} className="rounded-md" />
+            <img src="/logo.png" alt="BMM Love" width={48} height={48} className="rounded-md" />
           </div>
           <div className="flex items-center gap-4">
             <span className="text-gray-300 text-sm">{D.nome1} & {D.nome2}</span>

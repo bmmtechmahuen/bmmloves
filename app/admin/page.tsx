@@ -132,7 +132,7 @@ export default function AdminPage() {
       <div className="border-b border-white/8 px-6 py-4">
         <div className="max-w-5xl mx-auto flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <Image src="/logo.png" alt="BMM Love" width={28} height={28} className="rounded-md" />
+            <Image src="/logo.png" alt="BMM Love" width={48} height={48} className="rounded-md" />
             <span className="text-white/30 font-normal text-sm">Admin</span>
           </div>
           <button onClick={logout} className="text-xs text-white/30 hover:text-white/60 transition-colors">

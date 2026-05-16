@@ -1,6 +1,7 @@
 "use client";
 import { useState, useRef, useEffect, Suspense } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
 import ContadorTempo from "../components/ContadorTempo";
 
@@ -517,8 +518,8 @@ function CriarPageInner() {
     <div className="min-h-screen bg-[#0d0d0d] text-white flex flex-col">
       {/* Header */}
       <header className="border-b border-white/5 px-6 py-4 flex items-center justify-between flex-shrink-0">
-        <Link href="/" className="font-black text-lg tracking-tight">
-          <span className="text-[#E8185A]">BMM</span>LOVE
+        <Link href="/">
+          <Image src="/logo.png" alt="BMM Love" width={64} height={64} className="rounded-md" />
         </Link>
         <span className="text-gray-600 text-xs tracking-wide">Criando sua série</span>
       </header>

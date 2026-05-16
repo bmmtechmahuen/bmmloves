@@ -17,7 +17,7 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 flex items-center justify-between h-16">
         {/* Logo */}
         <a href="/" className="flex items-center gap-2.5">
-          <Image src="/logo.png" alt="BMM Love" width={32} height={32} className="rounded-md" />
+          <Image src="/logo.png" alt="BMM Love" width={48} height={48} className="rounded-md" />
         </a>
 
         {/* Desktop links */}

@@ -47,7 +47,7 @@ export default function ProfileSelector({ nome, tituloFilme, onSelect }: Props) 
     >
       {/* BMM Love logo top */}
       <div className="absolute top-6 left-1/2 -translate-x-1/2 flex items-center gap-2">
-        <Image src="/logo.png" alt="BMM Love" width={28} height={28} className="rounded-md" />
+        <Image src="/logo.png" alt="BMM Love" width={48} height={48} className="rounded-md" />
       </div>
 
       <h1

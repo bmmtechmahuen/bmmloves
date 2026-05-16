@@ -72,7 +72,7 @@ export default function EntrarPage() {
         {/* Logo */}
         <div className="text-center mb-10">
           <div className="flex items-center justify-center gap-2.5">
-            <Image src="/logo.png" alt="BMM Love" width={36} height={36} className="rounded-md" />
+            <Image src="/logo.png" alt="BMM Love" width={64} height={64} className="rounded-md" />
           </div>
           <p className="text-white/30 text-sm mt-2">Acesse sua conta</p>
         </div>
