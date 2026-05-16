@@ -519,7 +519,7 @@ function CriarPageInner() {
       {/* Header */}
       <header className="border-b border-white/5 px-6 py-4 flex items-center justify-between flex-shrink-0">
         <Link href="/">
-          <Image src="/logo.png" alt="BMM Love" width={64} height={64} className="rounded-md" />
+          <Image src="/logo.png" alt="BMM Love" width={40} height={40} className="rounded-md" />
         </Link>
         <span className="text-gray-600 text-xs tracking-wide">Criando sua série</span>
       </header>
