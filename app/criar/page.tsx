@@ -7,7 +7,7 @@ import ContadorTempo from "../components/ContadorTempo";
 
 function compressImage(dataUrl: string, maxDimension = 1200, quality = 0.82): Promise<string> {
   return new Promise((resolve, reject) => {
-    const img = new Image();
+    const img = new window.Image();
     img.onload = () => {
       let { width, height } = img;
       if (width > maxDimension || height > maxDimension) {
