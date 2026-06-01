@@ -9,6 +9,7 @@ type SavedData = {
   nome2: string;
   tituloFilme: string;
   email: string;
+  plano?: string;
 };
 
 function ProntoPageInner() {
@@ -28,6 +29,7 @@ function ProntoPageInner() {
         nome2: searchParams.get("nome2") || "",
         tituloFilme: searchParams.get("tituloFilme") || "",
         email: searchParams.get("email") || "",
+        plano: searchParams.get("plano") || undefined,
       };
       setData(fromUrl);
       return;
@@ -38,6 +40,14 @@ function ProntoPageInner() {
       if (raw) setData(JSON.parse(raw));
     } catch {}
   }, [searchParams]);
+
+  useEffect(() => {
+    if (!data?.plano) return;
+    const prices: Record<string, number> = { "7dias": 15.90, vitalicio: 23.90 };
+    const value = prices[data.plano] ?? 0;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (window as any).fbq?.("track", "Purchase", { value, currency: "BRL" });
+  }, [data]);
 
   const pageUrl = data
     ? `${typeof window !== "undefined" ? window.location.origin : "https://bmmmlove.com"}/casal/${data.pageId}`

@@ -61,6 +61,7 @@ export async function GET(req: NextRequest) {
     nome2: nome2 || "",
     tituloFilme: tituloFilme || "",
     email: email || "",
+    plano: pending.plan,
     ...(zap ? { zap } : {}),
   });
 
